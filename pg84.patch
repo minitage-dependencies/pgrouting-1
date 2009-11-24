@@ -1,0 +1,36 @@
+diff -ur pgrouting/core/src/astar.c pgrouting.new/core/src/astar.c
+--- pgrouting/core/src/astar.c	2008-09-04 04:21:23.000000000 +0200
++++ pgrouting.new/core/src/astar.c	2009-11-24 21:08:14.000000000 +0100
+@@ -21,6 +21,8 @@
+ 
+ #include "postgres.h"
+ #include "executor/spi.h"
++#include "catalog/pg_type.h"
++
+ #include "funcapi.h"
+ 
+ #include <stdio.h>
+diff -ur pgrouting/core/src/dijkstra.c pgrouting.new/core/src/dijkstra.c
+--- pgrouting/core/src/dijkstra.c	2008-09-04 04:21:23.000000000 +0200
++++ pgrouting.new/core/src/dijkstra.c	2009-11-24 21:08:01.000000000 +0100
+@@ -21,6 +21,8 @@
+ 
+ #include "postgres.h"
+ #include "executor/spi.h"
++#include "catalog/pg_type.h"
++
+ #include "funcapi.h"
+ 
+ #include "fmgr.h"
+diff -ur pgrouting/core/src/shooting_star.c pgrouting.new/core/src/shooting_star.c
+--- pgrouting/core/src/shooting_star.c	2008-09-04 04:21:23.000000000 +0200
++++ pgrouting.new/core/src/shooting_star.c	2009-11-24 21:08:25.000000000 +0100
+@@ -21,6 +21,8 @@
+ 
+ #include "postgres.h"
+ #include "executor/spi.h"
++#include "catalog/pg_type.h"
++
+ #include "funcapi.h"
+ 
+ #include <stdio.h>

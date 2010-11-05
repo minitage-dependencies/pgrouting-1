@@ -1,0 +1,36 @@
+diff -ur pgrouting.old/core/src/edge_visitors.hpp pgrouting/core/src/edge_visitors.hpp
+--- pgrouting.old/core/src/edge_visitors.hpp	2010-11-05 17:26:32.614125685 +0000
++++ pgrouting/core/src/edge_visitors.hpp	2010-11-05 17:30:15.666899586 +0000
+@@ -3,7 +3,7 @@
+ 
+ #include <iosfwd>
+ #include <boost/config.hpp>
+-#include <boost/property_map.hpp>
++#include <boost/property_map/property_map.hpp>
+ #include <boost/graph/graph_traits.hpp>
+ #include <boost/limits.hpp>
+ #include <boost/graph/detail/is_same.hpp>
+diff -ur pgrouting.old/core/src/shooting_star_boost_wrapper.cpp pgrouting/core/src/shooting_star_boost_wrapper.cpp
+--- pgrouting.old/core/src/shooting_star_boost_wrapper.cpp	2010-11-05 17:26:32.614125685 +0000
++++ pgrouting/core/src/shooting_star_boost_wrapper.cpp	2010-11-05 17:27:05.880029489 +0000
+@@ -23,7 +23,7 @@
+ 
+ #include <boost/graph/graph_traits.hpp>
+ #include <boost/graph/adjacency_list.hpp>
+-#include <boost/vector_property_map.hpp>
++#include <boost/property_map/vector_property_map.hpp>
+ #include <shooting_star_search.hpp>
+ 
+ #include "shooting_star.h"
+diff -ur pgrouting.old/core/src/shooting_star_relax.hpp pgrouting/core/src/shooting_star_relax.hpp
+--- pgrouting.old/core/src/shooting_star_relax.hpp	2010-11-05 17:26:32.614125685 +0000
++++ pgrouting/core/src/shooting_star_relax.hpp	2010-11-05 17:28:59.570539407 +0000
+@@ -15,7 +15,7 @@
+ #include <functional>
+ #include <boost/limits.hpp> // for numeric limits
+ #include <boost/graph/graph_traits.hpp>
+-#include <boost/property_map.hpp>
++#include <boost/property_map/property_map.hpp>
+ 
+ #include <postgres.h>
+ 

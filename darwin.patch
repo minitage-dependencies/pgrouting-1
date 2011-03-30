@@ -1,0 +1,62 @@
+diff -uNr pgrouting-1.05/CMakeLists.txt pgrouting-1.05.new/CMakeLists.txt
+--- pgrouting-1.05/CMakeLists.txt	2010-11-17 03:42:21.000000000 +0100
++++ pgrouting-1.05.new/CMakeLists.txt	2011-03-30 11:37:29.000000000 +0200
+@@ -1,3 +1,4 @@
++
+ CMAKE_MINIMUM_REQUIRED(VERSION 2.3)
+ PROJECT(PGROUTING)
+ 
+diff -uNr pgrouting-1.05/cmake/FindPostgreSQL.cmake pgrouting-1.05.new/cmake/FindPostgreSQL.cmake
+--- pgrouting-1.05/cmake/FindPostgreSQL.cmake	2010-11-17 03:42:21.000000000 +0100
++++ pgrouting-1.05.new/cmake/FindPostgreSQL.cmake	2011-03-30 11:37:29.000000000 +0200
+@@ -4,6 +4,7 @@
+ #  POSTGRESQL_INCLUDE_DIR, where to find POSTGRESQL.h
+ #  POSTGRESQL_LIBRARIES, the libraries needed to use POSTGRESQL.
+ #  POSTGRESQL_FOUND, If false, do not try to use PostgreSQL.
++#  POSTGRESQL_EXECUTABLE
+ #
+ # Copyright (c) 2006, Jaroslaw Staniek, <js@iidea.pl>
+ #
+@@ -12,13 +13,16 @@
+ 
+ # Add the postgresql and mysql include paths here
+ 
+-if(POSTGRESQL_INCLUDE_DIR AND POSTGRESQL_LIBRARIES)
++if(POSTGRESQL_INCLUDE_DIR AND POSTGRESQL_LIBRARIES AND POSTGRESQL_EXECUTABLE)
+    set(POSTGRESQL_FOUND TRUE)
+-
+-else(POSTGRESQL_INCLUDE_DIR AND POSTGRESQL_LIBRARIES)
++else(POSTGRESQL_INCLUDE_DIR AND POSTGRESQL_LIBRARIES AND POSTGRESQL_EXECUTABLE)
+ 
+ #  find_path(POSTGRESQL_INCLUDE_DIR libpq-fe.h
+ 
++ FIND_PROGRAM(POSTGRESQL_EXECUTABLE postgres)
++ MESSAGE(STATUS "POSTGRESQL_EXECUTABLE is " ${POSTGRESQL_EXECUTABLE})
++
++
+  FIND_PATH(POSTGRESQL_INCLUDE_DIR postgres.h
+       /usr/include/server
+       /usr/include/pgsql/server
+@@ -54,4 +58,4 @@
+ 
+   mark_as_advanced(POSTGRESQL_INCLUDE_DIR POSTGRESQL_LIBRARIES)
+ 
+-endif(POSTGRESQL_INCLUDE_DIR AND POSTGRESQL_LIBRARIES)
++endif(POSTGRESQL_INCLUDE_DIR AND POSTGRESQL_LIBRARIES AND POSTGRESQL_EXECUTABLE)
+diff -uNr pgrouting-1.05/core/src/CMakeLists.txt pgrouting-1.05.new/core/src/CMakeLists.txt
+--- pgrouting-1.05/core/src/CMakeLists.txt	2010-11-17 03:42:21.000000000 +0100
++++ pgrouting-1.05.new/core/src/CMakeLists.txt	2011-03-30 11:57:16.000000000 +0200
+@@ -1,6 +1,9 @@
+-
+ SET(LIBRARY_OUTPUT_PATH ../../lib/)
+-ADD_LIBRARY(routing SHARED dijkstra.c astar.c shooting_star.c boost_wrapper.cpp astar_boost_wrapper.cpp shooting_star_boost_wrapper.cpp)
++IF(APPLE)
++    SET(LIBRARY_MODE_TARGET "MODULE")
++ELSE(APPLE)
++    SET(LIBRARY_MODE_TARGET "SHARED")
++ENDIF(APPLE)
++ADD_LIBRARY(routing ${LIBRARY_MODE_TARGET} dijkstra.c astar.c shooting_star.c boost_wrapper.cpp astar_boost_wrapper.cpp shooting_star_boost_wrapper.cpp)
+ INSTALL(TARGETS routing DESTINATION ${LIBRARY_INSTALL_PATH})
+-
+-
++SET_TARGET_PROPERTIES(routing PROPERTIES LINK_FLAGS "-bundle_loader ${POSTGRESQL_EXECUTABLE} -bundle")

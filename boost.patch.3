@@ -1,0 +1,57 @@
+diff -Nur pgrouting-1.05/core/src/astar_boost_wrapper.cpp pgrouting-1.05.n/core/src/astar_boost_wrapper.cpp
+--- pgrouting-1.05/core/src/astar_boost_wrapper.cpp	2010-11-17 03:42:21.000000000 +0100
++++ pgrouting-1.05.n/core/src/astar_boost_wrapper.cpp	2013-06-02 23:00:26.000000000 +0200
+@@ -139,8 +139,8 @@
+ 
+   graph_t graph(num_nodes);
+ 
+-  property_map<graph_t, edge_weight_t>::type weightmap = get(edge_weight, 
+-							     graph);
++  //property_map<graph_t, edge_weight_t>::type weightmap = get(edge_weight, 
++  //							     graph);
+ 
+   for (std::size_t j = 0; j < count; ++j)
+   {
+diff -Nur pgrouting-1.05/core/src/boost_wrapper.cpp pgrouting-1.05.n/core/src/boost_wrapper.cpp
+--- pgrouting-1.05/core/src/boost_wrapper.cpp	2010-11-17 03:42:21.000000000 +0100
++++ pgrouting-1.05.n/core/src/boost_wrapper.cpp	2013-06-02 22:59:06.000000000 +0200
+@@ -73,7 +73,7 @@
+ 
+     graph_t graph(num_nodes);
+ 
+-    property_map<graph_t, edge_weight_t>::type weightmap = get(edge_weight, graph);
++    //property_map<graph_t, edge_weight_t>::type weightmap = get(edge_weight, graph);
+ 
+     for (std::size_t j = 0; j < count; ++j)
+     {
+diff -Nur pgrouting-1.05/core/src/edge_visitors.hpp pgrouting-1.05.n/core/src/edge_visitors.hpp
+--- pgrouting-1.05/core/src/edge_visitors.hpp	2010-11-17 03:42:21.000000000 +0100
++++ pgrouting-1.05.n/core/src/edge_visitors.hpp	2013-06-02 22:08:38.000000000 +0200
+@@ -6,7 +6,12 @@
+ #include <boost/property_map.hpp>
+ #include <boost/graph/graph_traits.hpp>
+ #include <boost/limits.hpp>
+-#include <boost/graph/detail/is_same.hpp>
++#include <boost/version.hpp>
++#if BOOST_VERSION <= 14700
++ #include <boost/graph/detail/is_same.hpp>
++#else
++#include <boost/type_traits/is_same.hpp>
++#endif
+ 
+ namespace boost 
+ {
+diff -Nur pgrouting-1.05/extra/driving_distance/src/boost_drivedist.cpp pgrouting-1.05.n/extra/driving_distance/src/boost_drivedist.cpp
+--- pgrouting-1.05/extra/driving_distance/src/boost_drivedist.cpp	2010-11-17 03:42:21.000000000 +0100
++++ pgrouting-1.05.n/extra/driving_distance/src/boost_drivedist.cpp	2013-06-02 22:18:38.000000000 +0200
+@@ -84,8 +84,8 @@
+   
+   graph_t graph( num_nodes );
+   
+-  property_map<graph_t, edge_weight_t>::type weightmap = 
+-    get(edge_weight, graph);
++ //property_map<graph_t, edge_weight_t>::type weightmap = 
++ //  get(edge_weight, graph);
+   
+   for (std::size_t j = 0; j < count; ++j)
+     {
